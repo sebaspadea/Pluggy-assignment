@@ -2,28 +2,22 @@ const puppeteer = require('puppeteer')
 
 const webScrapper = async (url, seccion) => {
   try {
-    const browser= await puppeteer.launch({
+    const browser = await puppeteer.launch({
       headless: false
     });
-    const page=await browser.newPage();
-  
-    let response = await loadUrl(page, url, browser, seccion);
-    return response
+    const page = await browser.newPage();
+    await page.goto(url,{
+      awaitUntil:["load","domcontentloaded","networkidle0"]
+    });
+    const valorEncontrado=await page.$eval(seccion, el=>el.innerHTML)
+    await console.log(`Valor: ${valorEncontrado}`);
+    await browser.close();
+    return valorEncontrado
   } catch(err) {
     console.log(err)
   }
 };
 
-async function loadUrl(page, url, browser, seccion){
-  await page.goto(url,{
-    awaitUntil:["load","domcontentloaded","networkidle0","networkidle2"]
-  });
-
-  const valorEncontrado=await page.$eval(seccion, el=>el.innerHTML)
-  await console.log(`Valor: ${valorEncontrado}`);
-  browser.close();
-  return valorEncontrado
-};
 
 let blueAmbitoCompra = webScrapper("https://www.ambito.com/contenidos/dolar.html",".variacion-max-min-chico > .d-flex  > .first > .data-compra");
 let blueAmbitoVenta = webScrapper("https://www.ambito.com/contenidos/dolar.html",".variacion-max-min-chico > .d-flex  > .second > .data-venta");
