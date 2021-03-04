@@ -8,6 +8,7 @@ const webScrapper = async (url, seccion) => {
     const page = await browser.newPage();
   
     let response = await loadUrl(page, url, browser, seccion);
+    await response
     return response
   } catch(err) {
     console.log(err)
@@ -20,7 +21,6 @@ async function loadUrl(page, url, browser, seccion){
   });
 
   const valorEncontrado= await page.$eval(seccion, el=>el.innerHTML)
-  console.log(`Valor: ${valorEncontrado}`);
   browser.close();
   return valorEncontrado
 };
@@ -34,10 +34,12 @@ let blueDolarHoyVenta = webScrapper("https://www.dolarhoy.com/",".dolar > .is-pa
 let blueCronistaVenta = webScrapper("https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB",".markets > #market-scrll-1 > li > a > .sell > .sell-wrapper > .sell-value")
 let blueCronistaCompra = webScrapper("https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB",".markets > #market-scrll-1 > li > a > .buy > .buy-wrapper > .buy-value")
 
-
-
-
-console.log(`Valor dólar blue ámbito: ${blueAmbitoCompra} para la compra y ${blueAmbitoVenta} para la venta`);
-console.log(`Valor dólar blue dolarHoy: ${blueDolarHoyCompra} para la compra y ${blueDolarHoyVenta} para la venta`);
-console.log(`Valor dólar blue cronista: ${blueCronistaCompra} para la compra y ${blueCronistaVenta} para la venta`);
+module.exports = {
+  blueDolarHoyVenta,
+  blueDolarHoyCompra,
+  blueAmbitoCompra,
+  blueAmbitoVenta,
+  blueCronistaCompra,
+  blueCronistaVenta
+}
 
