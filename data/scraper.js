@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 
+
 const webScrapper = async (url, seccion) => {
   try {
     const browser = await puppeteer.launch({
@@ -29,9 +30,11 @@ let blueDolarHoyVenta = webScrapper("https://www.dolarhoy.com/",".dolar > .is-pa
 let blueCronistaVenta = webScrapper("https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB",".markets > #market-scrll-1 > li > a > .sell > .sell-wrapper > .sell-value")
 let blueCronistaCompra = webScrapper("https://www.cronista.com/MercadosOnline/moneda.html?id=ARSB",".markets > #market-scrll-1 > li > a > .buy > .buy-wrapper > .buy-value")
 
-blueAmbitoCompra.then(console.log)
-blueAmbitoVenta.then(console.log)
-blueDolarHoyCompra.then(console.log)
-blueDolarHoyVenta.then(console.log)
-blueCronistaVenta.then(console.log)
-blueCronistaCompra.then(console.log)
+module.exports = {
+  blueAmbitoCompra,
+  blueAmbitoVenta,
+  blueCronistaCompra,
+  blueCronistaVenta,
+  blueDolarHoyVenta,
+  blueDolarHoyCompra
+}
