@@ -1,4 +1,5 @@
 const quotesJson = require('../data/quotes.json');
+const averagesJson = require('../data/average.json');
 const cacheResponse = require('../utils/cacheResponse');
 const express = require('express');
 
@@ -22,6 +23,19 @@ function appRouter(app) {
       next(err);
     }
   });
+
+  router.get('/averages', async function(req, res, next) {
+    cacheResponse(res, 60);
+    try {
+      res.status(200).json({
+        data: averagesJson,
+        message: 'Average of all quotes'
+      });
+
+    } catch(err) {
+      next(err);
+    }
+  })
 };
 
 
