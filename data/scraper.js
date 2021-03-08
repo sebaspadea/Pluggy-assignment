@@ -4,7 +4,6 @@ const puppeteer = require('puppeteer');
 const webScrapper = async (url, seccion) => {
   try {
     const browser = await puppeteer.launch({
-      headless: false
     });
     const page = await browser.newPage();
     
@@ -12,9 +11,13 @@ const webScrapper = async (url, seccion) => {
       awaitUntil:["load","domcontentloaded","networkidle0"]
     });
 
+    await page.waitForSelector(seccion, {
+      visible: true,
+    });
     const response = await page.$eval(seccion, el=>el.innerHTML);
     await response
     browser.close();
+    console.log(`url: ${url}, valor:${response}`)
     return response
   } catch(err) {
     console.log(err)

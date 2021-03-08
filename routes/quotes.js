@@ -1,10 +1,11 @@
-const userRoutes = (app, fs) => {
+const quotesJson = require('../data/quotes.json');
+const fs = require('fs');
 
-  const dataPath = "../data/quotes.json"
+const quotesRoutes = (app, fs) => {
 
 
   app.get('/quotes', (req, res) => {
-    fs.readFile(dataPath, 'utf8', (err, data) => {
+    fs.readFile(quotesJson, 'utf8', (err, data) => {
       if (err) {
         throw err;
       }
@@ -14,4 +15,4 @@ const userRoutes = (app, fs) => {
   });
 };
 
-module.exports = userRoutes;
+module.exports = quotesRoutes;
