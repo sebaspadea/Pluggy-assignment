@@ -39,7 +39,11 @@ function calculateSlippage(price, prom){
   let subtraction = prom - price
   let division = subtraction / price
   let slippage = division * 100
-  return Number(slippage.toFixed(2))
+  let result = Number(slippage.toFixed(2))
+  if (result < 0){
+    return `${result}🔻`
+  }
+  return `${result}💹`
 }
 
 
